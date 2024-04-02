@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Electronic } from 'models/Electronic';
 import { ElectronicDTO } from 'dtos/ElectronicDTO';
@@ -18,5 +18,22 @@ export class AppService {
       quantity: postData.quantity,
       price: postData.price
     });
+  }
+
+  async deleteElectronic(id: number) {
+    const electronic = await this.electronic.findOne({
+      where: {
+        id,
+      }
+    });
+
+    if (!electronic) {
+      throw new HttpException(
+        'Not Found booking to this id', 
+        HttpStatus.NOT_FOUND
+      );
+    }
+
+    return await electronic.destroy();
   }
 }
