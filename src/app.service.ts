@@ -10,6 +10,21 @@ export class AppService {
     private electronic: typeof Electronic
   ) {}
 
+  async putEletronic(id, postData: ElectronicDTO) {
+    const electronic = await this.electronic.findOne({
+      where: {
+        id,
+      }
+    });
+
+    if(!electronic) {
+      throw new HttpException('Not Found electronic with this id', HttpStatus.NOT_FOUND)
+    }
+
+    electronic.update(postData)
+    return await electronic.save()
+  }
+  
   createElectronic(postData: ElectronicDTO) {
     this.electronic.create({
       name: postData.name,
