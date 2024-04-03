@@ -1,7 +1,10 @@
-export class ResponseDeleteDTO {
-    public message;
+import { ElectronicDTO } from './ElectronicDTO';
 
-    public constructor() {
-        this.message = "The delete was success";
-    }
+
+export class ResponseDeleteDTO {
+  public message: string;
+
+  public constructor() {
+    this.message = "This delete was success";
+  }
 }

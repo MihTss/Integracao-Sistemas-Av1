@@ -1,4 +1,4 @@
-import { Controller, Get, Put, Param, Body, Post, Query, HttpException, HttpStatus, Delete } from '@nestjs/common';
+import { Controller, Get, Res, Put, Param, Body, Post, Query, HttpException, HttpStatus, Delete } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ElectronicDTO } from 'dtos/ElectronicDTO';
 
@@ -65,7 +65,7 @@ export class AppController {
   @Put('/electronic/:id')
   async updateElectronic(
     @Param('id') id: number,
-    @Body() updateData: ElectronicDTO,
+    @Body()  updateData: ElectronicDTO,
   ): Promise<ResponseUpdateDTO> {
 
     this.validation(id, updateData)
@@ -79,14 +79,14 @@ export class AppController {
 
   @Delete('/electronic')
   async deleteElectronic(
-    @Query('id') id: number,
+      @Query('id') id: number,
   ): Promise<ResponseDeleteDTO> {
     this.validationIdElement(id);
     this.appService.deleteElectronic(id);
 
     return new ResponseDeleteDTO();
   }
-  
+
   // Validations 
 
   private validation(

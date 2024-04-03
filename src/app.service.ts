@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Electronic } from 'models/Electronic';
 import { ElectronicDTO } from 'dtos/ElectronicDTO';
+import {ResponseDeleteDTO } from 'dtos/ResponseDeleteDTO'
 
 @Injectable()
 export class AppService {
@@ -18,6 +19,7 @@ export class AppService {
     });
 
     if(!electronic) {
+      
       throw new HttpException('Not Found electronic with this id', HttpStatus.NOT_FOUND)
     }
 
@@ -36,6 +38,7 @@ export class AppService {
   }
 
   async deleteElectronic(id: number) {
+
     const electronic = await this.electronic.findOne({
       where: {
         id,
@@ -44,11 +47,10 @@ export class AppService {
 
     if (!electronic) {
       throw new HttpException(
-        'Not Found booking to this id', 
-        HttpStatus.NOT_FOUND
-      );
+        'Not Found electronic with this id', 
+        HttpStatus.NOT_FOUND)
     }
-
-    return await electronic.destroy();
+    
+    return await electronic.destroy(); 
   }
 }
