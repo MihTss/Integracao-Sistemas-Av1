@@ -37,20 +37,22 @@ export class AppService {
     });
   }
 
-  async deleteElectronic(id: number) {
-
+  async deleteElectronic(id: number): Promise<{ message: string }> {
     const electronic = await this.electronic.findOne({
       where: {
         id,
-      }
+      },
     });
-
+  
     if (!electronic) {
       throw new HttpException(
-        'Not Found electronic with this id', 
-        HttpStatus.NOT_FOUND)
+        'Not Found electronic for this id',
+        HttpStatus.NOT_FOUND,
+      );
     }
-    
-    return await electronic.destroy(); 
+  
+    await electronic.destroy();
+  
+    return { message: 'The delete was success' };
   }
 }

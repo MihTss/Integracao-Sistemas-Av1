@@ -77,15 +77,36 @@ export class AppController {
 
   // DELETE
 
+  // @Delete('/electronic')
+  // async deleteElectronic(
+  //   @Query('id') id: number,
+  // ) : Promise<ResponseDeleteDTO> {
+  //   this.validationIdElement(id);
+  //   this.appService.deleteElectronic(id);
+
+  //   return new ResponseDeleteDTO();
+  // }
+
   @Delete('/electronic')
   async deleteElectronic(
-      @Query('id') id: number,
+    @Query('id') id: number,
   ): Promise<ResponseDeleteDTO> {
-    this.validationIdElement(id);
-    this.appService.deleteElectronic(id);
-
-    return new ResponseDeleteDTO();
+    try {
+      this.validationIdElement(id);
+      await this.appService.deleteElectronic(id);
+      return new ResponseDeleteDTO();
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new HttpException(
+          'Internal Server Error',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+    }
   }
+
 
   // Validations 
 
